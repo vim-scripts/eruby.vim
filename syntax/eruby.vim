@@ -10,14 +10,18 @@ endif
 
 "Source the html syntax file
 ru! syntax/html.vim
+"Set the filetype to html to load the html ftplugins
+set ft=html
 unlet b:current_syntax
 
 "Put the ruby syntax file in @rubyTop
 syn include @rubyTop syntax/ruby.vim
 
-syn region erubyBlock matchgroup=erubyRubyDelim start=#<%# end=#%># contains=@rubyTop
-syn region erubyBlock matchgroup=erubyRubyDelim start=#<%=# end=#%># contains=@rubyTop
-syn region erubyComment start=+<%#+ end=#%>#
+syn region erubyBlock matchgroup=erubyRubyDelim start=#<%# end=#%># contains=@rubyTop,erubyEnd keepend
+syn region erubyBlock matchgroup=erubyRubyDelim start=#<%=# end=#%># contains=@rubyTop,erubyEnd keepend
+syn region erubyComment start=+<%#+ end=#%># keepend
+syn match erubyEnd #\<end\>#
 
 hi link erubyRubyDelim todo
 hi link erubyComment comment
+hi link erubyEnd rubyControl
